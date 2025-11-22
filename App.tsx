@@ -6,7 +6,7 @@ import { ResultDisplay } from './components/ResultDisplay';
 import { Button } from './components/Button';
 import { AppView, HeadshotStyle } from './types';
 import { generateEditedImage } from './services/geminiService';
-import { Camera, ChevronRight, Sparkles } from 'lucide-react';
+import { Camera, ChevronRight, Sparkles, Coffee, CheckCircle, Zap, Shield, User } from 'lucide-react';
 
 export default function App() {
   const [view, setView] = useState<AppView>(AppView.LANDING);
@@ -34,18 +34,6 @@ export default function App() {
   const handleGenerate = async () => {
     if (!originalImage || !selectedStyle) return;
 
-    setView(AppView.RESULT); // We'll use a sub-state effectively by showing processing content
-    // But strictly speaking, let's create a PROCESSING view if we want to be cleaner,
-    // Or just conditionally render in RESULT view. 
-    // Let's add a temporary processing state variable for clarity or map View to 'PROCESSING'
-    // Re-mapping View to generic 'PROCESSING' isn't in the Enum, let's just use a conditional return 
-    // or add a loading state.
-    // Actually, I'll just handle it inside the component render logic below for 'RESULT' when image is null?
-    // No, let's add a dedicated visual state.
-    
-    // Simple state machine approach:
-    // View: EDITOR -> (Generating) -> RESULT
-    
     const finalPrompt = selectedStyle.id === 'custom' 
       ? customPrompt 
       : selectedStyle.prompt;
@@ -58,17 +46,6 @@ export default function App() {
     setError(null);
     
     // Show loading UI
-    // For now, I'll use a separate state variable to indicate loading over the RESULT view
-    // or just switch to a "PROCESSING" view if I update the Enum.
-    // Let's just render the ProcessingView when generating is true.
-    const isProcessing = true; // Local variable won't work for render, using generatedImage === null check in RESULT view? 
-    // Let's update the view to a new one I'll add implicitly or just conditionally render.
-    
-    // Let's assume specific view for processing to keep App clean
-    // I'll use a specialized "PROCESSING" string cast for internal state if needed, or better:
-    // Add proper loading handling.
-    
-    // Let's set view to RESULT, but generatedImage is null, so ResultDisplay shows ProcessingView.
     setView(AppView.RESULT);
     setGeneratedImage(null); // Ensure it's null to trigger loading state
 
@@ -138,6 +115,98 @@ export default function App() {
                  <span>Company Profiles</span>
                  <span>Portfolios</span>
                </div>
+            </div>
+
+            {/* SEO Content Section */}
+            <div className="w-full max-w-5xl mx-auto mt-32 text-left space-y-24 pb-12">
+              
+              {/* Features Grid */}
+              <section>
+                <h2 className="text-3xl font-bold text-slate-900 text-center mb-12">Why use ProShot AI?</h2>
+                <div className="grid md:grid-cols-3 gap-8">
+                  <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
+                    <div className="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center text-indigo-600 mb-4">
+                      <Zap className="w-6 h-6" />
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">Instant Results</h3>
+                    <p className="text-slate-500">No waiting days for a photographer to edit photos. Get your professional headshot in under 30 seconds.</p>
+                  </div>
+                  <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
+                    <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-green-600 mb-4">
+                      <Shield className="w-6 h-6" />
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">Privacy First</h3>
+                    <p className="text-slate-500">We process everything in your browser session. Your photos are not stored on our servers.</p>
+                  </div>
+                  <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
+                    <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center text-purple-600 mb-4">
+                      <User className="w-6 h-6" />
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">Studio Quality</h3>
+                    <p className="text-slate-500">Powered by Google's Gemini 2.5 Flash, our AI understands lighting, composition, and attire.</p>
+                  </div>
+                </div>
+              </section>
+
+              {/* How it works */}
+              <section className="bg-white rounded-3xl p-8 md:p-12 border border-slate-100 shadow-lg">
+                <div className="grid md:grid-cols-2 gap-12 items-center">
+                  <div>
+                    <h2 className="text-3xl font-bold text-slate-900 mb-6">How to generate a professional headshot</h2>
+                    <ol className="space-y-6">
+                      <li className="flex gap-4">
+                        <span className="flex-shrink-0 w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold">1</span>
+                        <div>
+                          <h4 className="font-bold text-slate-900">Upload a casual photo</h4>
+                          <p className="text-slate-500 text-sm">Selfies work best. Ensure your face is well-lit and clearly visible.</p>
+                        </div>
+                      </li>
+                      <li className="flex gap-4">
+                        <span className="flex-shrink-0 w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold">2</span>
+                        <div>
+                          <h4 className="font-bold text-slate-900">Choose your style</h4>
+                          <p className="text-slate-500 text-sm">Select from Corporate, Modern Tech, Outdoor, or create a Custom style.</p>
+                        </div>
+                      </li>
+                      <li className="flex gap-4">
+                        <span className="flex-shrink-0 w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold">3</span>
+                        <div>
+                          <h4 className="font-bold text-slate-900">Download & Impress</h4>
+                          <p className="text-slate-500 text-sm">Get your high-resolution headshot instantly. Perfect for LinkedIn or your CV.</p>
+                        </div>
+                      </li>
+                    </ol>
+                  </div>
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl transform rotate-3 opacity-20"></div>
+                    <img 
+                      src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop" 
+                      alt="Professional Business Woman Headshot" 
+                      className="relative rounded-2xl shadow-xl"
+                    />
+                  </div>
+                </div>
+              </section>
+
+              {/* FAQ for SEO */}
+              <section className="max-w-3xl mx-auto">
+                <h2 className="text-3xl font-bold text-slate-900 text-center mb-12">Frequently Asked Questions</h2>
+                <div className="space-y-6">
+                  <div className="border-b border-slate-200 pb-6">
+                    <h3 className="font-bold text-lg text-slate-900 mb-2">Is this AI headshot generator free?</h3>
+                    <p className="text-slate-600">Yes, ProShot AI uses advanced generative technology to create professional photos at no cost to you.</p>
+                  </div>
+                  <div className="border-b border-slate-200 pb-6">
+                    <h3 className="font-bold text-lg text-slate-900 mb-2">What makes a good photo for AI generation?</h3>
+                    <p className="text-slate-600">For the best AI headshot results, upload a photo where your face is unobstructed, the lighting is even (no harsh shadows), and you are looking directly at the camera.</p>
+                  </div>
+                  <div className="border-b border-slate-200 pb-6">
+                    <h3 className="font-bold text-lg text-slate-900 mb-2">Can I use these photos for LinkedIn?</h3>
+                    <p className="text-slate-600">Absolutely. The "Corporate" and "Modern Tech" styles are specifically tuned to meet the professional standards required for LinkedIn profiles.</p>
+                  </div>
+                </div>
+              </section>
+
             </div>
           </div>
         );
@@ -227,7 +296,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-slate-900 selection:bg-indigo-100 selection:text-indigo-900">
+    <div className="min-h-screen bg-[#F8FAFC] text-slate-900 selection:bg-indigo-100 selection:text-indigo-900 flex flex-col">
       <style>{`
         @keyframes scan {
           0% { top: 0%; opacity: 0; }
@@ -263,7 +332,7 @@ export default function App() {
       `}</style>
 
       {/* Header */}
-      <header ref={headerRef} className="w-full py-6 px-4 md:px-8 flex justify-between items-center max-w-7xl mx-auto">
+      <header ref={headerRef} className="w-full py-6 px-4 md:px-8 flex justify-between items-center max-w-7xl mx-auto shrink-0">
         <div 
           className="flex items-center gap-2 cursor-pointer group" 
           onClick={view !== AppView.LANDING ? resetApp : undefined}
@@ -284,7 +353,7 @@ export default function App() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 md:px-8 pb-12">
+      <main className="max-w-7xl mx-auto px-4 md:px-8 pb-12 grow w-full flex flex-col">
         {error && (
           <div className="fixed top-24 left-1/2 transform -translate-x-1/2 bg-red-50 text-red-600 px-6 py-3 rounded-full shadow-lg z-50 animate-shake flex items-center gap-2 border border-red-100">
             <span className="w-2 h-2 bg-red-500 rounded-full"></span>
@@ -294,6 +363,25 @@ export default function App() {
         
         {renderContent()}
       </main>
+      
+      {/* Footer / Support Section */}
+      <footer className="w-full py-8 border-t border-slate-200 bg-white shrink-0">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-slate-500 text-sm">
+            © 2024 ProShot AI. Free to use for everyone.
+          </p>
+          
+          <a 
+            href="https://www.buymeacoffee.com" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-yellow-900 px-4 py-2 rounded-full font-bold text-sm transition-colors shadow-sm"
+          >
+            <Coffee className="w-4 h-4" />
+            Support the Developer
+          </a>
+        </div>
+      </footer>
     </div>
   );
 }
