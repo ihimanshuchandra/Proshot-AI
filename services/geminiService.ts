@@ -1,15 +1,14 @@
 import { GoogleGenAI } from "@google/genai";
 
-// Initialize the client
-// Note: In a real production app, you might handle this differently,
-// but for this environment we strictly follow the guidelines.
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
 export const generateEditedImage = async (
   base64Image: string,
   prompt: string
 ): Promise<string> => {
   try {
+    // Initialize the client inside the function to ensure safe access to process.env
+    // and prevent runtime crashes on module load if environment variables aren't ready.
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+
     // Clean the base64 string if it contains the data URL prefix
     const cleanBase64 = base64Image.replace(/^data:image\/(png|jpeg|jpg|webp);base64,/, '');
     

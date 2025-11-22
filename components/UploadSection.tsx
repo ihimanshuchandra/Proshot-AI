@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Upload, Image as ImageIcon, AlertCircle } from 'lucide-react';
+import { Upload, Image as ImageIcon, CircleAlert } from 'lucide-react';
 
 interface UploadSectionProps {
   onImageSelect: (file: File, previewUrl: string) => void;
@@ -94,7 +94,7 @@ export const UploadSection: React.FC<UploadSectionProps> = ({ onImageSelect }) =
 
       {error && (
         <div className="mt-4 p-4 bg-red-50 text-red-600 rounded-xl flex items-center gap-3 text-sm animate-shake">
-          <AlertCircle className="w-5 h-5 flex-shrink-0" />
+          <CircleAlert className="w-5 h-5 flex-shrink-0" />
           {error}
         </div>
       )}
